@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--- Tab Icon -->
-    <link rel="icon" type="image/png" href="#" />
+    <link rel="icon" type="image/png" href="Assets/logo.png" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
@@ -26,14 +26,17 @@
                 <div style="display: block;">
                     <form>
                         <p class="loginInputsContainer">
-                            <label class="labelLogin" for="emailLogin"> Email </label>
                             <input class="loginInput" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
                         </p>
                         <p class="loginInputsContainer">
-                            <label class="labelLogin" for="passLogin"> Password </label>
-                            <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
+                            <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
+                                placeholder="Password">
                         </p>
-                        <input type="submit" value="Login">
+                        <div class="loginBtnContainer">
+                            <div class="loginBtnDiv">
+                                <input class="text-capitalize loginBtn" type="submit" value="LOGIN">
+                            </div>
+                        </div>
                     </form>
                 </div>
 
