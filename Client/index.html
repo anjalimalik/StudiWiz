@@ -20,37 +20,31 @@
 <body>
     <div class="bodyContainer">
         <div class="bg-gradient flex-container">
-            <span> Welcome </span>
+            <div class="login1">
+                <span class="welcome"> Welcome </span>
 
-            <div style="display: block;">
-                <form>
-                    <label for="emailLogin"> Email </label>
-                    <input id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
-                    <input type="submit" value="Login">
-                </form>
-            </div>
-
-            <div style="display: block;">
-                <form>
-                    <label for="passLogin"> Password </label>
-                    <input id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
-                </form>
-                </span>
-            </div>
-
-            <div>
                 <div style="display: block;">
-                    <div></div>
-                    <button> Login </button>
+                    <form>
+                        <label for="emailLogin"> Email </label>
+                        <input id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
+                        <label for="passLogin"> Password </label>
+                        <input id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
+                        <input type="submit" value="Login">
+                    </form>
                 </div>
-            </div>
 
-            <div>
-                <a href="#"> Sign Up </a>
+                <div style="display: block;">
+                    <form>
+
+                    </form>
+                    </span>
+                </div>
+                <div>
+                    <a href="#"> Sign Up </a>
+                </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
