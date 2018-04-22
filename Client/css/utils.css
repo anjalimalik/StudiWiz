@@ -1,7 +1,7 @@
 
 .bodyContainer {
-  width: 100%;
-  margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .flex-container { 
@@ -42,7 +42,7 @@
 
 .welcome {
     font-size: 30px;
-    line-height: 6em;
+    margin: 5% 0 35% 0;
     display: block;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: bolder;
@@ -85,10 +85,10 @@
 .loginBtnDiv {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background: #01B101;
-    background: -webkit-linear-gradient(right,#408EFF, #F4FB35);
+    background: -webkit-linear-gradient(right,#408EFF, #BB35FB);
     background: -o-linear-gradient(right, #29D3FB, #BB35FB);
     background: -moz-linear-gradient(right, #2BD4FB, #BB35FB);
-    background: linear-gradient(right, #2BD4FB, #ECFB35);
+    background: linear-gradient(right, #2A33FB, #BB35FB);
     float: center;
 }
   
@@ -100,4 +100,20 @@
     background: transparent;
     border: none;
     height: 50px;
+}
+
+.loginInput:focus {
+    outline: none;
+    border-color: #9EA7ED;
+    box-shadow: 0 0 20px #9EA7ED;
+}
+
+.signUpContainer {
+    margin: 10px 0 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
 }

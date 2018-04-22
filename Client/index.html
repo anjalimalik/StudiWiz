@@ -20,18 +20,24 @@
 <body>
     <div class="bodyContainer">
         <div class="bg-gradient flex-container">
+
             <div class="login1">
-                <span class="welcome"> Welcome </span>
+                <div class="js-tilt" style="text-align: center;" data-tilt>
+                    <img src="Assets/Title.png" alt="logo" width="90%">
+                </div>
+                <span class="welcome"> </span>
 
                 <div style="display: block;">
                     <form>
                         <p class="loginInputsContainer">
-                            <input class="loginInput" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
+                            <input class="loginInput" aria-hidden="true" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email">
                         </p>
+
                         <p class="loginInputsContainer">
                             <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
                                 placeholder="Password">
                         </p>
+
                         <div class="loginBtnContainer">
                             <div class="loginBtnDiv">
                                 <input class="text-capitalize loginBtn" type="submit" value="LOGIN">
@@ -40,22 +46,21 @@
                     </form>
                 </div>
 
-                <div style="display: block;">
-                    <form>
-
-                    </form>
-                    </span>
-                </div>
                 <div>
-                    <a href="#"> Sign Up </a>
+                    <a class="signUpContainer" href="#"> Sign Up </a>
                 </div>
-                </form>
             </div>
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale:          1.5,
+        })
+    </script>
 </body>
 
 </html>
