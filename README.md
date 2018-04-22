@@ -1,2 +1,2 @@
-# prepRight
-Web application
+# Prep-Right
+
