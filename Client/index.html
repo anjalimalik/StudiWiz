@@ -21,35 +21,39 @@
     <div class="bodyContainer">
         <div class="bg-gradient flex-container">
 
-            <div class="login1">
-                <div class="js-tilt" style="text-align: center;" data-tilt>
-                    <img src="Assets/Title.png" alt="logo" width="90%">
+            <div class="login1 row">
+                <div class="column" style="display: inline-block; margin-top: 20%;">
+                    <div class="js-tilt" data-tilt>
+                        <img style="text-align: center;" src="Assets/Title.png" alt="logo" width="90%">
+                    </div>
                 </div>
-                <span class="welcome"> </span>
+                <div class="column" style="display: inline-block;">
+                    <span class="welcome"> Welcome </span>
 
-                <div style="display: block;">
-                    <form>
-                        <p class="loginInputsContainer">
-                            <input class="loginInput" aria-hidden="true" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email">
-                        </p>
+                    <div style="display: block;">
+                        <form>
+                            <p class="loginInputsContainer">
+                                <input class="loginInput" aria-hidden="true" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email">
+                            </p>
 
-                        <p class="loginInputsContainer">
-                            <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
-                                placeholder="Password">
-                        </p>
+                            <p class="loginInputsContainer">
+                                <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
+                                    placeholder="Password">
+                            </p>
 
-                        <div class="loginBtnContainer">
-                            <div class="loginBtnDiv">
-                                <input class="text-capitalize loginBtn" type="submit" value="LOGIN">
+                            <div class="loginBtnContainer">
+                                <div class="loginBtnDiv">
+                                    <input class="text-capitalize loginBtn" type="submit" value="LOGIN">
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div>
-                    <a class="signUpContainer" href="#"> Sign Up </a>
+                        </form>
+                    </div>
+                    <div>
+                        <a class="signUpContainer" href="#"> Sign Up </a>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -58,7 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
     <script>
         $('.js-tilt').tilt({
-            scale:          1.5,
+            scale: 1.5,
         })
     </script>
 </body>
