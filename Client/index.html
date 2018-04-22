@@ -25,13 +25,13 @@
 
                 <div style="display: block;">
                     <form>
-                        <p>
-                        <label for="emailLogin"> Email </label>
-                        <input id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
+                        <p class="loginInputsContainer">
+                            <label class="labelLogin" for="emailLogin"> Email </label>
+                            <input class="loginInput" id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
                         </p>
-                        <p>
-                        <label for="passLogin"> Password </label>
-                        <input id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
+                        <p class="loginInputsContainer">
+                            <label class="labelLogin" for="passLogin"> Password </label>
+                            <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
                         </p>
                         <input type="submit" value="Login">
                     </form>
