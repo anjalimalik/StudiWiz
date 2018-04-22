@@ -1,27 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>Login</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--- Tab Icon -->
-    <link rel="icon" type="image/png" href="Assets/icon.png"/>
+    <link rel="icon" type="image/png" href="#" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/utils.css">
 
 </head>
+
 <body>
-    <div>
-        Anjali
+    <div class="bodyContainer">
+        <div class="bg-gradient flex-container">
+            <span> Welcome </span>
+
+            <div style="display: block;">
+                <form>
+                    <label for="emailLogin"> Email </label>
+                    <input id="emailLogin" type="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Email Address">
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+
+            <div style="display: block;">
+                <form>
+                    <label for="passLogin"> Password </label>
+                    <input id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" placeholder="Password">
+                </form>
+                </span>
+            </div>
+
+            <div>
+                <div style="display: block;">
+                    <div></div>
+                    <button> Login </button>
+                </div>
+            </div>
+
+            <div>
+                <a href="#"> Sign Up </a>
+            </div>
+            </form>
+        </div>
     </div>
-
-
-
-
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/main.js"></script>
-    </body>
+</body>
+
 </html>

@@ -1,0 +1,24 @@
+
+.bodyContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.flex-container { 
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;   
+    align-items: center;
+    padding: 15px;
+    min-height: 100vh;
+}
+
+.bg-gradient {
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
