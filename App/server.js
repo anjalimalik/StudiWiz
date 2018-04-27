@@ -148,7 +148,7 @@ app.post('/runSearch', function (req, res) {
   var key = req.body.key;
 
   if (!key) {
-      return res.status(400).json({ message: "Missing Information for Searching" });
+    return res.status(400).json({ message: "Missing Information for Searching" });
   }
 
   key = "%" + key + "%";
@@ -158,11 +158,11 @@ app.post('/runSearch', function (req, res) {
 
   db.query(dbQuery, requestParams, function (err, result) {
 
-      if (err) {
-          res.send(JSON.stringify({ "status": 500, "error": err, "response": null, "message": "Internal server error" }));
-      }
+    if (err) {
+      res.send(JSON.stringify({ "status": 500, "error": err, "response": null, "message": "Internal server error" }));
+    }
 
-      res.send(JSON.stringify({ "status": 200, "error": null, "response": result, "message": "Success! Matching Users retrieved!" }));
+    res.send(JSON.stringify({ "status": 200, "error": null, "response": result, "message": "Success! Matching Users retrieved!" }));
   });
 });
 
@@ -196,13 +196,13 @@ app.post('/newTask', function (req, res) {
   var check = req.body.check;
   let query = "INSERT INTO Tasks SET ?";
 
-  let task = {
+  let newTask = {
     idUsers: id,
     Task: task,
     Check: check
   }
 
-  db.query(query, task, function (error, response) {
+  db.query(query, newTask, function (error, response) {
     if (error) {
       res.send(JSON.stringify({
         "status": 500,
@@ -217,6 +217,34 @@ app.post('/newTask', function (req, res) {
         "error": null,
         "response": response,
         "message": "Success! creating new task successful!"
+      }));
+    }
+  });
+});
+
+
+app.post('/toggleCheck', function (req, res) {
+  var id = req.body.id;
+  var task = req.body.task;
+  var check = req.body.ch;
+  let query = "UPDATE Tasks SET Check = ? WHERE idUsers = ? AND Task = ?";
+  let params = [ch, id, task];
+
+  db.query(query, params, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! toggling check successful!"
       }));
     }
   });

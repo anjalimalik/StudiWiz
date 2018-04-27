@@ -78,6 +78,8 @@ function mytasks_onclick() {
     document.getElementById("mytasks").style.display = "block";
     document.getElementById("teams").style.display = "none";
 
+    showTasks();
+
     mylist = document.getElementsByTagName("LI");
     for (i = 0; i < mylist.length; i++) {
         var span = document.createElement("SPAN");
@@ -96,8 +98,8 @@ function tasks_listeners() {
     list.addEventListener('click', function (ev) {
         if (ev.target.tagName === 'LI') {
             ev.target.classList.toggle('checked');
-            
-            if(ev.target.classList.contains('checked')) {
+
+            if (ev.target.classList.contains('checked')) {
                 var ch = true;
             }
             else {
@@ -117,7 +119,7 @@ function tasks_listeners() {
                     "task": t,
                     "ch": ch
                 })
-        
+
             }).then(function (res) {
                 if (res.ok) {
                     res.json().then(function (data) {
@@ -435,15 +437,30 @@ function showTasks() {
                 var json = data.response;
 
                 for (var k = 0; k < json.length; k++) {
-                    var task = document.createElement("il");
+                    var task = document.createElement("li");
                     if (json[k].Check) {
                         task.setAttribute('class', 'checked');
                     }
 
                     task.innerHTML = json[k].Task;
-                    tasksUL.appendChild(task);
-                }
+                    
 
+                    var span = document.createElement("SPAN");
+
+                    span.className = "close";
+                    span.innerHTML = "\u00D7";
+                    task.appendChild(span);
+
+                    for (var i = 0; i < close.length; i++) {
+                        close[i].onclick = function () {
+                            var div = this.parentElement;
+                            div.style.display = "none";
+                        }
+                    }
+
+                    tasksUL.appendChild(task);
+
+                }
             }.bind(this));
         }
         else {
