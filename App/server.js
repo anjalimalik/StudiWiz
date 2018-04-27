@@ -256,6 +256,33 @@ app.post('/toggleCheck', function (req, res) {
 });
 
 
+app.post('/deleteTask', function (req, res) {
+  var id = req.body.id;
+  var task = req.body.task;
+
+  let query = 'DELETE FROM Tasks WHERE idUsers = ' + id + ' AND Task = \'' + task + '\'';
+  db.query(query, function (error, response) {
+    if (error) {
+      console.log(error);
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! deletion successful!"
+      }));
+    }
+  });
+});
+
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`);

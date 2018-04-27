@@ -7,6 +7,7 @@ var urlSearch = "http://localhost:3000/runSearch";
 var urlgetTasks = "http://localhost:3000/getTasks";
 var urlNewTask = "http://localhost:3000/newTask";
 var urlToggleCheck = "http://localhost:3000/toggleCheck";
+var urlDeleteTask = "http://localhost:3000/deleteTask";
 
 var mylist;
 var i;
@@ -21,6 +22,8 @@ var email;
 
 // main
 function onload_main() {
+
+    document.getElementById("wel").innerHTML = "WELCOME";
 
     document.getElementById("mytasks").style.display = "none";
     document.getElementById("teams").style.display = "none";
@@ -75,6 +78,7 @@ function onload_main() {
 }
 
 function mytasks_onclick() {
+    document.getElementById("wel").innerHTML = "";
     document.getElementById("mytasks").style.display = "block";
     document.getElementById("teams").style.display = "none";
 
@@ -153,6 +157,7 @@ function showTeams() {
 
     $('.team').remove();
 
+    document.getElementById("wel").innerHTML = "";
     document.getElementById("mytasks").style.display = "none";
     document.getElementById("teams").style.display = "block";
 
@@ -531,6 +536,46 @@ function add_onclick() {
     }).catch(function (err) {
         alert("Error: No internet connection!");
         console.log(err.message + ": No Internet Connection");
+    });
+
+    $(document).on('click', '.close', function () {
+        var val = $(this).parent().html();
+        var str = val.split("<span");
+        var s = str[0];
+
+        if(s == null || s == "") {
+            alert("s");
+            return;
+        }
+        alert(s);
+        fetch(urlDeleteTask, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                "id": id,
+                "task": s
+            })
+
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (data) {
+                    console.log("Inside res.ok. deleted!");
+                }.bind(this));
+            }
+            else {
+                console.log("Error");
+                res.json().then(function (data) {
+                    console.log(data.message);
+                }.bind(this));
+            }
+        }).catch(function (err) {
+            alert("Error: No internet connection!");
+            console.log(err.message + ": No Internet Connection");
+        });
+        
     });
 
 }
