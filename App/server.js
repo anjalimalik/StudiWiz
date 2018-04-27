@@ -166,6 +166,63 @@ app.post('/runSearch', function (req, res) {
   });
 });
 
+app.post('/getTasks', function (req, res) {
+  var id = req.body.id;
+  let query = "SELECT * FROM Tasks WHERE idUsers = ?";
+
+  db.query(query, id, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! User tasks retrieved!"
+      }));
+    }
+  });
+});
+
+app.post('/newTask', function (req, res) {
+  var id = req.body.id;
+  var task = req.body.task;
+  var check = req.body.check;
+  let query = "INSERT INTO Tasks SET ?";
+
+  let task = {
+    idUsers: id,
+    Task: task,
+    Check: check
+  }
+
+  db.query(query, task, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! creating new task successful!"
+      }));
+    }
+  });
+});
+
+
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`);
