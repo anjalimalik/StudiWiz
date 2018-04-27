@@ -22,10 +22,10 @@ function mytasks_onclick() {
     close = document.getElementsByClassName("close");
 
     list = document.querySelector('ul');
-    document_ready();
+    tasks_listeners();
 }
 
-function document_ready() {
+function tasks_listeners() {
     list.addEventListener('click', function (ev) {
         if (ev.target.tagName === 'LI') {
             ev.target.classList.toggle('checked');
