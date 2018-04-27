@@ -199,7 +199,7 @@ app.post('/newTask', function (req, res) {
   let newTask = {
     idUsers: id,
     Task: task,
-    Check: check
+    Chk: check
   }
 
   db.query(query, newTask, function (error, response) {
@@ -227,11 +227,19 @@ app.post('/toggleCheck', function (req, res) {
   var id = req.body.id;
   var task = req.body.task;
   var check = req.body.ch;
-  let query = "UPDATE Tasks SET Check = ? WHERE idUsers = ? AND Task = ?";
-  let params = [ch, id, task];
-
-  db.query(query, params, function (error, response) {
+  if(check){
+    check = 1;
+  } 
+  else {
+    check = 0;
+  }
+  let query = 'UPDATE Tasks SET Chk = '+check+' WHERE idUsers = '+id;
+  db.query(query, function (error, response) {
     if (error) {
+      console.log(error);
+      console.log(check);
+      console.log(id);
+      console.log(task);
       res.send(JSON.stringify({
         "status": 500,
         "error": error,
@@ -240,6 +248,9 @@ app.post('/toggleCheck', function (req, res) {
       }));
     }
     else {
+      console.log(response);
+      console.log("hee");
+      
       res.send(JSON.stringify({
         "status": 200,
         "error": null,

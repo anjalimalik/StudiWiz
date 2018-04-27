@@ -106,7 +106,7 @@ function tasks_listeners() {
                 var ch = false;
             }
 
-            var t = ev.target.html();
+            var t = ((ev.target.innerHTML).split("<span class=\"close\">×"))[0];
 
             fetch(urlToggleCheck, {
                 method: "POST",
@@ -122,12 +122,13 @@ function tasks_listeners() {
 
             }).then(function (res) {
                 if (res.ok) {
+                    alert(ch);
                     res.json().then(function (data) {
-                        console.log("Inside res.ok. User ID retrieved");
+                        console.log("Inside res.ok. Toggle check");
                     }.bind(this));
                 }
                 else {
-                    console.log("Error: Cannot get UserID");
+                    console.log("Error");
                     res.json().then(function (data) {
                         console.log(data.message);
                     }.bind(this));
@@ -438,7 +439,7 @@ function showTasks() {
 
                 for (var k = 0; k < json.length; k++) {
                     var task = document.createElement("li");
-                    if (json[k].Check) {
+                    if (json[k].Chk) {
                         task.setAttribute('class', 'checked');
                     }
 
