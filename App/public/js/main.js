@@ -5,6 +5,8 @@ var urlUserDetails = "http://localhost:3000/getUserDetails";
 var urlCreateTeam = "http://localhost:3000/newTeam";
 var urlSearch = "http://localhost:3000/runSearch";
 var urlgetTasks = "http://localhost:3000/getTasks";
+var urlNewTask = "http://localhost:3000/newTask";
+var urlToggleCheck = "http://localhost:3000/toggleCheck";
 
 var mylist;
 var i;
@@ -94,6 +96,44 @@ function tasks_listeners() {
     list.addEventListener('click', function (ev) {
         if (ev.target.tagName === 'LI') {
             ev.target.classList.toggle('checked');
+            
+            if(ev.target.classList.contains('checked')) {
+                var ch = true;
+            }
+            else {
+                var ch = false;
+            }
+
+            var t = ev.target.html();
+
+            fetch(urlToggleCheck, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id": id,
+                    "task": t,
+                    "ch": ch
+                })
+        
+            }).then(function (res) {
+                if (res.ok) {
+                    res.json().then(function (data) {
+                        console.log("Inside res.ok. User ID retrieved");
+                    }.bind(this));
+                }
+                else {
+                    console.log("Error: Cannot get UserID");
+                    res.json().then(function (data) {
+                        console.log(data.message);
+                    }.bind(this));
+                }
+            }).catch(function (err) {
+                alert("Error: No internet connection!");
+                console.log(err.message + ": No Internet Connection");
+            });
         }
     }, false);
 
@@ -105,34 +145,7 @@ function tasks_listeners() {
     }
 }
 
-function add_onclick() {
-    var li = document.createElement("li");
 
-    var inputValue = document.getElementById("newtask").value;
-
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-
-    if (inputValue === '') {
-        alert("You must write something!");
-    } else {
-        document.getElementById("items").appendChild(li);
-    }
-    document.getElementById("newtask").value = "";
-
-    var span = document.createElement("SPAN");
-
-    span.className = "close";
-    span.innerHTML = "\u00D7";
-    li.appendChild(span);
-
-    for (var i = 0; i < close.length; i++) {
-        close[i].onclick = function () {
-            var div = this.parentElement;
-            div.style.display = "none";
-        }
-    }
-}
 
 function showTeams() {
 
@@ -426,7 +439,7 @@ function showTasks() {
                     if (json[k].Check) {
                         task.setAttribute('class', 'checked');
                     }
-                    
+
                     task.innerHTML = json[k].Task;
                     tasksUL.appendChild(task);
                 }
@@ -442,4 +455,61 @@ function showTasks() {
         alert("Error: No internet connection!");
         console.log(err.message + ": No Internet Connection");
     });
+}
+
+function add_onclick() {
+
+    var inputValue = document.getElementById("newtask").value;
+
+    fetch(urlNewTask, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": id,
+            "task": inputValue,
+            "check": false
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+                var li = document.createElement("li");
+
+                var t = document.createTextNode(inputValue);
+                li.appendChild(t);
+
+                if (inputValue === '') {
+                    alert("You must write something!");
+                } else {
+                    document.getElementById("items").appendChild(li);
+                }
+                document.getElementById("newtask").value = "";
+
+                var span = document.createElement("SPAN");
+
+                span.className = "close";
+                span.innerHTML = "\u00D7";
+                li.appendChild(span);
+
+                for (var i = 0; i < close.length; i++) {
+                    close[i].onclick = function () {
+                        var div = this.parentElement;
+                        div.style.display = "none";
+                    }
+                }
+            }.bind(this));
+        }
+        else {
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
+
 }
