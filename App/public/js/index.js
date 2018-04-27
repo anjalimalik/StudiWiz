@@ -23,7 +23,6 @@ function login() {
     }).then(function (res) {
         if (res.ok) {
             res.json().then(function (data) {
-                alert("HERE2");
                 var u = 'dashboard.html?email='.concat(email);
                 window.location.href = u;
             }.bind(this));

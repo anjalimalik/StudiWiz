@@ -159,5 +159,8 @@ function showTeams() {
         alert("Error: No internet connection!");
         console.log(err.message + ": No Internet Connection");
     });
+}
 
+function createTeam_onclick() {
+    
 }

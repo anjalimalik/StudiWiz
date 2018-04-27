@@ -21,10 +21,10 @@
     <div class="containerLayout">
         <div class="sidebar-container">
             <div class="grey">
-                <div class="sidebar-item btn btn-primary" style="margin-top: 16%;" onclick="mytasks_onclick()">
+                <div class="sidebar-item btn btn-dark" style="margin-top: 16%; width: 100%;" onclick="mytasks_onclick()">
                     My Tasks
                 </div>
-                <div class="sidebar-item btn btn-primary" onclick="showTeams()">
+                <div class="sidebar-item btn btn-dark" style="width: 100%;" onclick="showTeams()">
                     My Teams
                 </div>
             </div>
@@ -55,6 +55,8 @@
                 <div id="teams" style="display: none; width: 100%;">
                     <div id="myDIV" class="header">
                         <h2 style="margin:5px">My Teams</h2>
+                        <input type="text" id="newteam" class="teamInputs" placeholder="Enter new team name...">
+                        <span onclick="createTeam_onclick()" class="addBtn">Create</span>
                     </div>
 
                     <div id="allTeams">

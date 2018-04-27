@@ -16,8 +16,6 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html')
 });
 
-
-
 var mysql = require('mysql');
 
 var db = mysql.createConnection({
@@ -45,8 +43,7 @@ app.post('/login', function (req, res) {
   if (!email || !password) {
     return res.status(401).json({ message: "invalid_credentials" });
   }
-
-  console.log("here");
+  
   var dbQuery = "SELECT * FROM Users WHERE Email = ? AND Password = ?;";
   var requestParams = [email, password];
 
