@@ -122,6 +122,8 @@ function add_onclick() {
 
 function showTeams() {
 
+    $('.team').remove();
+
     document.getElementById("mytasks").style.display = "none";
     document.getElementById("teams").style.display = "block";
 
@@ -144,7 +146,7 @@ function showTeams() {
 
                 for (var k = 0; k < Object.keys(data.response).length; k++) {
                     var team = document.createElement("div");
-                    team.setAttribute("style", "width: 100%; border-bottom: 5px solid black;");
+                    team.setAttribute('class', 'team');
                     team.innerHTML = json[k].TeamName;
                     teamDiv.appendChild(team);
                 }
@@ -178,7 +180,7 @@ function createTeam_onclick() {
     }).then(function (res) {
         if (res.ok) {
             res.json().then(function (data) {
-                
+
                 var allTeams = document.getElementById("allTeams");
 
                 var team = document.createElement("div");

@@ -43,7 +43,7 @@ app.post('/login', function (req, res) {
   if (!email || !password) {
     return res.status(401).json({ message: "invalid_credentials" });
   }
-  
+
   var dbQuery = "SELECT * FROM Users WHERE Email = ? AND Password = ?;";
   var requestParams = [email, password];
 
@@ -106,6 +106,36 @@ app.post('/getTeams', function (req, res) {
         "error": null,
         "response": response,
         "message": "Success! User teams retrieved!"
+      }));
+    }
+  });
+});
+
+app.post('/newTeam', function (req, res) {
+  var id = req.body.id;
+  var name = req.body.name;
+  let query = "INSERT INTO Teams SET ?";
+
+  let team = {
+    idUsers: id,
+    TeamName: name
+  }
+
+  db.query(query, team, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! creating new team successful!"
       }));
     }
   });
