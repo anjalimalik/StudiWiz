@@ -269,12 +269,12 @@ function runSearch() {
                         lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: visible; width: 100%; height: 20%;";
                         userSearchDiv.appendChild(lnk);
 
-                        lnk.addEventListener('click', function() {
-                            var val = lnk.innerHTML;
+                        $(document).on('click', '.searchClass.dropdown-item', function () {
+                            var val = $(this).html();
                             var str = val.split("(");
                             var s = (str[1].split(")"))[0];
                             addMember(s);
-                        }, false);
+                        });
                         
                     }
                 }
@@ -315,6 +315,12 @@ function addMember(memberemail) {
     $('.searchClass.dropdown-item').remove();
     $('.searchClass.dropdown-item.half-rule').remove();
     document.getElementById("searchUser").value = "";
+
+    if (document.getElementById("newteam").value.length == 0) {
+        alert("Name of the team cannot be empty!");
+        $("#closemodal").click();
+        return;
+    }
 
     fetch(urlUserDetails, {
         method: "POST",
@@ -398,6 +404,5 @@ function checkValue() {
         return;
     }
     alert("Name of the team cannot be empty!");
-    location.reload();
     $("#closemodal").click();
 }
