@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="css/utils.css" />
-
 </head>
 
 <body>
@@ -36,13 +35,13 @@
                             </p>
 
                             <p class="loginInputsContainer">
-                                <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
-                                    placeholder="Password">
+                                <input class="loginInput" id="passLogin" type="password" minlength="5" required pattern="(?=.*[a-z])(?=.*[A-Z]).*"
+                                    placeholder="Password"> <!-- required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*" -->
                             </p>
 
                             <div class="loginBtnContainer">
                                 <div class="loginBtnDiv">
-                                    <input class="text-capitalize loginBtn" type="submit" value="LOGIN">
+                                    <input class="text-capitalize loginBtn" type="button" value="LOGIN" onclick="login()">
                                 </div>
                             </div>
                         </form>
@@ -57,13 +56,14 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
     <script>
         $('.js-tilt').tilt({
             scale: 1.5,
         })
     </script>
+    
 </body>
 
 </html>

@@ -1,52 +1,13 @@
 "use strict";
 
-var urlLogin = "http://localhost:3000/login";
-
 var mylist;
 var i;
 var close;
 var list;
 
 // main
-
 function onload_main() {
-
-
     mytasks_onclick();
-}
-
-function login() {
-    var email = emailLogin.value;
-    var pass = passLogin.value;
-
-    fetch(urlLogin, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            "email": email,
-            "pass": pass
-        })
-
-    }).then(function (res) {
-        if (res.ok) {
-            res.json().then(function (data) {
-                var u = 'dashboard.html?email='.concat(email);
-                window.location.href = u;
-            }.bind(this));
-        }
-        else {
-            alert("Error: Login unsuccessful!");
-            res.json().then(function (data) {
-                console.log(data.message);
-            }.bind(this));
-        }
-    }).catch(function (err) {
-        alert("Error: No internet connection!");
-        console.log(err.message + ": No Internet Connection");
-    });
 }
 
 function mytasks_onclick() {
@@ -61,6 +22,7 @@ function mytasks_onclick() {
     close = document.getElementsByClassName("close");
 
     list = document.querySelector('ul');
+    document_ready();
 }
 
 function document_ready() {
@@ -69,8 +31,6 @@ function document_ready() {
             ev.target.classList.toggle('checked');
         }
     }, false);
-
-
 
     for (var i = 0; i < close.length; i++) {
         close[i].onclick = function () {
