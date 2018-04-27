@@ -480,6 +480,11 @@ function add_onclick() {
 
     var inputValue = document.getElementById("newtask").value;
 
+    if (inputValue === '') {
+        alert("You must write something!");
+        return;
+    }
+
     fetch(urlNewTask, {
         method: "POST",
         headers: {
@@ -500,11 +505,8 @@ function add_onclick() {
                 var t = document.createTextNode(inputValue);
                 li.appendChild(t);
 
-                if (inputValue === '') {
-                    alert("You must write something!");
-                } else {
-                    document.getElementById("items").appendChild(li);
-                }
+                
+                document.getElementById("items").appendChild(li);
                 document.getElementById("newtask").value = "";
 
                 var span = document.createElement("SPAN");
