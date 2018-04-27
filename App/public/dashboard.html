@@ -24,7 +24,7 @@
                 <div class="sidebar-item btn btn-primary" style="margin-top: 16%;" onclick="mytasks_onclick()">
                     My Tasks
                 </div>
-                <div class="sidebar-item btn btn-primary">
+                <div class="sidebar-item btn btn-primary" onclick="showTeams()">
                     My Teams
                 </div>
             </div>
@@ -34,7 +34,8 @@
 
             </div>
             <div class="white">
-                <div id="mytasks" style="width: 100%;">
+
+                <div id="mytasks" style="display: none; width: 100%;">
                     <div id="myDIV" class="header">
                         <h2 style="margin:5px">My Tasks</h2>
                         <input type="text" id="newtask" placeholder="Task item...">
@@ -49,6 +50,16 @@
                         <li>Read a book</li>
                         <li>Organize office</li>
                     </ul>
+                </div>
+
+                <div id="teams" style="display: none; width: 100%;">
+                    <div id="myDIV" class="header">
+                        <h2 style="margin:5px">My Teams</h2>
+                    </div>
+
+                    <div id="allTeams">
+                    </div>
+
                 </div>
 
 

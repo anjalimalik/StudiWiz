@@ -1,16 +1,66 @@
 "use strict";
 
+var urlgetTeams = "http://localhost:3000/getTeams";
+var urlUserDetails = "http://localhost:3000/getUserDetails";
+
 var mylist;
 var i;
 var close;
 var list;
 
+var id = -1;
+var email;
+
 // main
 function onload_main() {
-    mytasks_onclick();
+
+    document.getElementById("mytasks").style.display = "none";
+    document.getElementById("teams").style.display = "none";
+
+    var url = window.location.href;
+    var str = url.split("?email=");
+    email = str[1];
+
+    if (email == null || email == "" || email == "undefined") {
+        alert("You have to be logged in first!");
+        window.location.href = "index.html";
+    } else if (email.includes("#")) {
+        email = email.replace("#", "");
+    }
+
+    fetch(urlUserDetails, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "email": email
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+                console.log("Inside res.ok. User ID retrieved");
+                id = data.response[0].idUsers;
+            }.bind(this));
+        }
+        else {
+            console.log("Error: Cannot get UserID");
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
 }
 
 function mytasks_onclick() {
+    document.getElementById("mytasks").style.display = "block";
+    document.getElementById("teams").style.display = "none";
+
     mylist = document.getElementsByTagName("LI");
     for (i = 0; i < mylist.length; i++) {
         var span = document.createElement("SPAN");
@@ -67,4 +117,47 @@ function add_onclick() {
             div.style.display = "none";
         }
     }
+}
+
+function showTeams() {
+
+    document.getElementById("mytasks").style.display = "none";
+    document.getElementById("teams").style.display = "block";
+
+    fetch(urlgetTeams, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": id
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+                var teamDiv = document.getElementById("allTeams");
+
+                var json = data.response;
+
+                for (var k = 0; k < Object.keys(data.response).length; k++) {
+                    var team = document.createElement("div");
+                    team.setAttribute("style", "width: 100%; border-bottom: 5px solid black;");
+                    team.innerHTML = json[k].TeamName;
+                    teamDiv.appendChild(team);
+                }
+
+            }.bind(this));
+        }
+        else {
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
+
 }

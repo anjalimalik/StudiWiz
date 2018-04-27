@@ -66,6 +66,54 @@ app.post('/login', function (req, res) {
   });
 });
 
+app.post('/getUserDetails', function (req, res) {
+  var email = req.body.email;
+  let query = "SELECT idUsers FROM Users WHERE Email = ?";
+
+  db.query(query, email, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! User ID retrieved!"
+      }));
+    }
+  });
+});
+
+app.post('/getTeams', function (req, res) {
+  var id = req.body.id;
+  let query = "SELECT DISTINCT * FROM Teams WHERE idUsers = ?";
+
+  db.query(query, id, function (error, response) {
+    if (error) {
+      res.send(JSON.stringify({
+        "status": 500,
+        "error": error,
+        "response": null,
+        "message": "Internal server error"
+      }));
+    }
+    else {
+      res.send(JSON.stringify({
+        "status": 200,
+        "error": null,
+        "response": response,
+        "message": "Success! User teams retrieved!"
+      }));
+    }
+  });
+});
+
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`);
