@@ -252,10 +252,10 @@ function runSearch() {
                         if (json[i].idUsers == id) {
                             continue;
                         }
-                        var lnk = document.createElement("div");
+                        var lnk = document.createElement("a");
                         lnk.setAttribute('class', 'searchClass dropdown-item');
                         lnk.setAttribute('id', 'searchHide');
-                        lnk.onclick = addMember(json[i]);
+                        lnk.setAttribute("href", "#");
                         lnk.innerHTML = (json[i].Name).concat("  (", json[i].Email, ")");
                         lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: visible; width: 100%; height: 20%;";
                         userSearchDiv.appendChild(lnk);
@@ -300,6 +300,9 @@ function addMember(member) {
     
     var members = document.getElementById("members");
     if (members.innerHTML) {
+        if (members.innerHTML.includes(member.Name)){
+            return;
+        }
         members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
     }
     else {
@@ -322,17 +325,6 @@ function addMember(member) {
     }).then(function (res) {
         if (res.ok) {
             res.json().then(function (data) {
-
-                var allTeams = document.getElementById("allTeams");
-
-                var team = document.createElement("div");
-                team.setAttribute('class', 'team');
-                team.setAttribute('id', teamid);
-                team.innerHTML = document.getElementById("newteam").value;
-                allTeams.appendChild(team);
-
-                team.setAttribute('onclick', showOptions(teamid));
-
             }.bind(this));
         }
         else {
