@@ -141,6 +141,29 @@ app.post('/newTeam', function (req, res) {
   });
 });
 
+
+app.post('/runSearch', function (req, res) {
+  var key = req.body.key;
+
+  if (!key) {
+      return res.status(400).json({ message: "Missing Information for Searching" });
+  }
+
+  key = "%" + key + "%";
+
+  var dbQuery = "SELECT * FROM Users WHERE Name LIKE ? OR Email LIKE ? ORDER BY Name ASC";
+  var requestParams = [key, key];
+
+  db.query(dbQuery, requestParams, function (err, result) {
+
+      if (err) {
+          res.send(JSON.stringify({ "status": 500, "error": err, "response": null, "message": "Internal server error" }));
+      }
+
+      res.send(JSON.stringify({ "status": 200, "error": null, "response": result, "message": "Success! Matching Users retrieved!" }));
+  });
+});
+
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`);

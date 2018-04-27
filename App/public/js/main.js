@@ -3,6 +3,7 @@
 var urlgetTeams = "http://localhost:3000/getTeams";
 var urlUserDetails = "http://localhost:3000/getUserDetails";
 var urlCreateTeam = "http://localhost:3000/newTeam";
+var urlSearch = "http://localhost:3000/runSearch";
 
 var mylist;
 var i;
@@ -166,6 +167,10 @@ function showTeams() {
 
 function createTeam_onclick() {
 
+    var val = document.getElementById("newteam").value;
+
+    var teamid = "team".concat(val);
+
     fetch(urlCreateTeam, {
         method: "POST",
         headers: {
@@ -174,7 +179,7 @@ function createTeam_onclick() {
         },
         body: JSON.stringify({
             "id": id,
-            "name": document.getElementById("newteam").value,
+            "name": val,
         })
 
     }).then(function (res) {
@@ -185,8 +190,11 @@ function createTeam_onclick() {
 
                 var team = document.createElement("div");
                 team.setAttribute('class', 'team');
+                team.setAttribute('id', teamid);
                 team.innerHTML = document.getElementById("newteam").value;
                 allTeams.appendChild(team);
+
+                team.setAttribute('onclick', showOptions(teamid));
 
             }.bind(this));
         }
@@ -200,3 +208,70 @@ function createTeam_onclick() {
         console.log(err.message + ": No Internet Connection");
     });
 }
+
+function showOptions(teamDivId) {
+    var str = teamDivId.toString().split("team");
+    var tname = str[1];
+
+    var team = document.getElementById(teamDivId);
+}
+
+
+function runSearch() {
+    $('.searchClass.dropdown-item').remove();
+    $('.searchClass.dropdown-item.half-rule').remove();
+
+    var key = document.getElementById("searchUser").value;
+
+    fetch(urlSearch, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "key": key,
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+
+            res.json().then(function (data) {
+                var json = data.response;
+                var length = Object.keys(json).length;
+                var userSearchDiv = document.getElementById("usersearch");
+
+                if (length != 0) {
+                    for (i = 0; i < length; i++) {
+                        var lnk = document.createElement("a");
+                        lnk.setAttribute('class', 'searchClass dropdown-item');
+                        lnk.setAttribute('href', '#');
+                        lnk.innerHTML = (json[i].Name).concat("  (", json[i].Email, ")");
+                        lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: scroll;";
+                        userSearchDiv.appendChild(lnk);
+                    }
+                }
+                else if (length == 0) {
+                    var lnk = document.createElement("a");
+                    lnk.setAttribute('class', 'searchClass dropdown-item half-rule');
+                    lnk.innerHTML = "No matching users found!";
+                    lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; margin-left:0;";
+                    userSearchDiv.appendChild(lnk);
+                }
+
+                // show the dropdown
+                document.getElementById("searchUserToggle").style.display = "block";
+            });
+        }
+        else {
+            alert("Error: couldn't run search");
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
+}
+
