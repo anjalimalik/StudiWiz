@@ -227,7 +227,6 @@ function showOptions(teamDivId) {
 
 function runSearch() {
     $('#searchHide').remove();
-
     var key = document.getElementById("searchUser").value;
 
     fetch(urlSearch, {
@@ -250,12 +249,15 @@ function runSearch() {
 
                 if (length != 0) {
                     for (i = 0; i < length; i++) {
-                        var lnk = document.createElement("a");
+                        if (json[i].idUsers == id) {
+                            continue;
+                        }
+                        var lnk = document.createElement("div");
                         lnk.setAttribute('class', 'searchClass dropdown-item');
                         lnk.setAttribute('id', 'searchHide');
-                        lnk.setAttribute('href', '#');
+                        lnk.onclick = addMember(json[i]);
                         lnk.innerHTML = (json[i].Name).concat("  (", json[i].Email, ")");
-                        lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: scroll;";
+                        lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: visible; width: 100%; height: 20%;";
                         userSearchDiv.appendChild(lnk);
                     }
                 }
@@ -292,3 +294,62 @@ function runSearch() {
     });
 }
 
+function addMember(member) {
+    $('#searchHide').remove();
+    document.getElementById("searchUser").value = "";
+    
+    var members = document.getElementById("members");
+    if (members.innerHTML) {
+        members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+    }
+    else {
+        members.innerHTML = "<kbd id=\"name\" style=\"font-size: 18px; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+    }
+    
+    var val = document.getElementById("newteam").value;
+
+    fetch(urlCreateTeam, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": member.idUsers,
+            "name": val,
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+
+                var allTeams = document.getElementById("allTeams");
+
+                var team = document.createElement("div");
+                team.setAttribute('class', 'team');
+                team.setAttribute('id', teamid);
+                team.innerHTML = document.getElementById("newteam").value;
+                allTeams.appendChild(team);
+
+                team.setAttribute('onclick', showOptions(teamid));
+
+            }.bind(this));
+        }
+        else {
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
+
+}
+
+function clearModal() {
+    document.getElementById("newteam").value = "";
+    document.getElementById("searchUser").value = "";
+    $('#searchHide').remove();
+    $('#name').remove();
+}
