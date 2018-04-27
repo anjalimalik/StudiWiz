@@ -19,30 +19,29 @@
 
 <body onload="onload_main()">
     <!-- MODAL -->
-    <div class="modal" style="margin-top:150px;" id="myModal" aria-hidden="true">
+    <div class="modal" style="margin-top:5%; margin-left: 30%;" id="myModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Team</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: 2%;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="dropdown show" style="width: 70%; margin: 5% 0% 5% 0%; display: inline-block;">
-                            <input type="text" id="searchUser" class="teamInputs" placeholder="Search by name...">
+                            <input type="text" id="searchUser" class="teamInputs" placeholder="Search by name..." style="border-color: magenta;">
 
                             <div id="searchUserToggle" class="dropdown-menu show" x-placement="bottom-start" style="width: 300px; font-size: 14px; margin-top: 0%; display: none; position: absolute; transform: translate3d(0px, 50px, 0px); top: 0px; will-change: transform; overflow: auto;">
                                 <div id="usersearch" style="margin-top: 10%; z-index: 1;">
                                     <!-- Here goes the options for users (JS)-->
                                 </div>
                             </div>
-                            <input onclick="runSearch()" type="button" class="addBtn" style="margin-left: 0; width: 20%; display: inline-block;" value="Search"></input>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="sendReport" type="button" class="btn btn-danger" id="btn_modal_report" data-dismiss="modal">Send</button>
+                    <button type="button" class="addBtn" id="createBtn" data-dismiss="modal">Search</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

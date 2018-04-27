@@ -233,7 +233,6 @@ tasks {
   }
 
   .teamInputs {
-    border: none;
     width: 75%;
     padding: 10px;
     float: left;

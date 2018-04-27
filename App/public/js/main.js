@@ -30,6 +30,14 @@ function onload_main() {
         email = email.replace("#", "");
     }
 
+    // listeners
+    document.getElementById("searchUser").addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            runSearch();
+        }
+    });
+    /////
+
     fetch(urlUserDetails, {
         method: "POST",
         headers: {
@@ -218,8 +226,7 @@ function showOptions(teamDivId) {
 
 
 function runSearch() {
-    $('.searchClass.dropdown-item').remove();
-    $('.searchClass.dropdown-item.half-rule').remove();
+    $('#searchHide').remove();
 
     var key = document.getElementById("searchUser").value;
 
@@ -245,6 +252,7 @@ function runSearch() {
                     for (i = 0; i < length; i++) {
                         var lnk = document.createElement("a");
                         lnk.setAttribute('class', 'searchClass dropdown-item');
+                        lnk.setAttribute('id', 'searchHide');
                         lnk.setAttribute('href', '#');
                         lnk.innerHTML = (json[i].Name).concat("  (", json[i].Email, ")");
                         lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: scroll;";
@@ -253,6 +261,7 @@ function runSearch() {
                 }
                 else if (length == 0) {
                     var lnk = document.createElement("a");
+                    lnk.setAttribute('id', 'searchHide');
                     lnk.setAttribute('class', 'searchClass dropdown-item half-rule');
                     lnk.innerHTML = "No matching users found!";
                     lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; margin-left:0;";
@@ -261,10 +270,18 @@ function runSearch() {
 
                 // show the dropdown
                 document.getElementById("searchUserToggle").style.display = "block";
+
+                // if clicked anywhere else, hide the dropdown list
+                $(document).on('click', function (e) {
+                    if (e.target.id !== 'searchUserToggle') {
+                        $('#searchUserToggle').hide();
+                    }
+
+                })
+                
             });
         }
         else {
-            alert("Error: couldn't run search");
             res.json().then(function (data) {
                 console.log(data.message);
             }.bind(this));
