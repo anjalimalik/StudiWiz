@@ -122,7 +122,6 @@ function tasks_listeners() {
 
             }).then(function (res) {
                 if (res.ok) {
-                    alert(ch);
                     res.json().then(function (data) {
                         console.log("Inside res.ok. Toggle check");
                     }.bind(this));
