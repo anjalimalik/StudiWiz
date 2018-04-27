@@ -530,3 +530,7 @@ function add_onclick() {
     });
 
 }
+
+function logout() {
+    window.location.href="index.html";
+}

@@ -226,13 +226,13 @@ app.post('/toggleCheck', function (req, res) {
   var id = req.body.id;
   var task = req.body.task;
   var check = req.body.ch;
-  if(check == true){
+  if (check == true) {
     check = 1;
-  } 
+  }
   else {
     check = 0;
   }
-  let query = 'UPDATE Tasks SET Chk = '+check+' WHERE idUsers = '+id +' AND Task = \'' +task + '\'';
+  let query = 'UPDATE Tasks SET Chk = ' + check + ' WHERE idUsers = ' + id + ' AND Task = \'' + task + '\'';
   db.query(query, function (error, response) {
     if (error) {
       console.log(error);
@@ -244,7 +244,7 @@ app.post('/toggleCheck', function (req, res) {
       }));
     }
     else {
-      
+
       res.send(JSON.stringify({
         "status": 200,
         "error": null,
@@ -254,6 +254,7 @@ app.post('/toggleCheck', function (req, res) {
     }
   });
 });
+
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
