@@ -250,6 +250,9 @@ function runSearch() {
                 if (length != 0) {
                     for (i = 0; i < length; i++) {
                         if (json[i].idUsers == id) {
+                            if (length > 1) {
+                                continue;
+                            }
                             var lnk = document.createElement("a");
                             lnk.setAttribute('id', 'searchHide');
                             lnk.setAttribute('class', 'searchClass dropdown-item half-rule');
@@ -265,6 +268,14 @@ function runSearch() {
                         lnk.innerHTML = (json[i].Name).concat("  (", json[i].Email, ")");
                         lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; overflow: visible; width: 100%; height: 20%;";
                         userSearchDiv.appendChild(lnk);
+
+                        lnk.addEventListener('click', function() {
+                            var val = lnk.innerHTML;
+                            var str = val.split("(");
+                            var s = (str[1].split(")"))[0];
+                            addMember(s);
+                        }, false);
+                        
                     }
                 }
                 else if (length == 0) {
@@ -300,41 +311,68 @@ function runSearch() {
     });
 }
 
-function addMember(member) {
+function addMember(memberemail) {
     $('.searchClass.dropdown-item').remove();
     $('.searchClass.dropdown-item.half-rule').remove();
     document.getElementById("searchUser").value = "";
-    
-    var members = document.getElementById("members");
-    if (members.innerHTML) {
-        if (members.innerHTML.includes(member.Name)){
-            return;
-        }
-        members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
-    }
-    else {
-        members.innerHTML = "<kbd id=\"name\" style=\"font-size: 18px; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
-    }
-    
-    var val = document.getElementById("newteam").value;
 
-    fetch(urlCreateTeam, {
+    fetch(urlUserDetails, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
             'content-type': 'application/json'
         },
         body: JSON.stringify({
-            "id": member.idUsers,
-            "name": val,
+            "email": memberemail
         })
 
     }).then(function (res) {
         if (res.ok) {
             res.json().then(function (data) {
+                var member = data.response[0];
+                var members = document.getElementById("members");
+                if (members.innerHTML) {
+                    if (members.innerHTML.includes(member.Name)){
+                        return;
+                    }
+                    members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+                }
+                else {
+                    members.innerHTML = "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+                }
+                
+                var val = document.getElementById("newteam").value;
+            
+                fetch(urlCreateTeam, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "id": member.idUsers,
+                        "name": val,
+                    })
+            
+                }).then(function (res) {
+                    if (res.ok) {
+                        res.json().then(function (data) {
+                        }.bind(this));
+                    }
+                    else {
+                        res.json().then(function (data) {
+                            console.log(data.message);
+                        }.bind(this));
+                    }
+                }).catch(function (err) {
+                    alert("Error: No internet connection!");
+                    console.log(err.message + ": No Internet Connection");
+                });
+            
             }.bind(this));
         }
         else {
+            console.log("Error: Cannot get UserID");
             res.json().then(function (data) {
                 console.log(data.message);
             }.bind(this));
@@ -343,7 +381,6 @@ function addMember(member) {
         alert("Error: No internet connection!");
         console.log(err.message + ": No Internet Connection");
     });
-
 }
 
 function clearModal() {

@@ -65,7 +65,7 @@ app.post('/login', function (req, res) {
 
 app.post('/getUserDetails', function (req, res) {
   var email = req.body.email;
-  let query = "SELECT idUsers FROM Users WHERE Email = ?";
+  let query = "SELECT * FROM Users WHERE Email = ?";
 
   db.query(query, email, function (error, response) {
     if (error) {
