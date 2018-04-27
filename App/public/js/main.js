@@ -4,6 +4,7 @@ var urlgetTeams = "http://localhost:3000/getTeams";
 var urlUserDetails = "http://localhost:3000/getUserDetails";
 var urlCreateTeam = "http://localhost:3000/newTeam";
 var urlSearch = "http://localhost:3000/runSearch";
+var urlgetTasks = "http://localhost:3000/getTasks";
 
 var mylist;
 var i;
@@ -226,6 +227,7 @@ function createTeam_onclick() {
 
     }
     showTeams();
+    clearModal();
 }
 
 function showOptions(teamDivId) {
@@ -397,4 +399,47 @@ function checkValue() {
     }
     alert("Name of the team cannot be empty!");
     $("#closemodal").click();
+}
+
+
+function showTasks() {
+
+    fetch(urlgetTasks, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": id
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+                var tasksUL = document.getElementById("items");
+
+                var json = data.response;
+
+                for (var k = 0; k < json.length; k++) {
+                    var task = document.createElement("il");
+                    if (json[k].Check) {
+                        task.setAttribute('class', 'checked');
+                    }
+                    
+                    task.innerHTML = json[k].Task;
+                    tasksUL.appendChild(task);
+                }
+
+            }.bind(this));
+        }
+        else {
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
 }
