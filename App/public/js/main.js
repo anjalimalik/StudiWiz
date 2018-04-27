@@ -10,6 +10,9 @@ var i;
 var close;
 var list;
 
+var mList = "";
+var idList = [];
+
 var id = -1;
 var email;
 
@@ -53,6 +56,7 @@ function onload_main() {
             res.json().then(function (data) {
                 console.log("Inside res.ok. User ID retrieved");
                 id = data.response[0].idUsers;
+                mList = data.response[0].Name;
             }.bind(this));
         }
         else {
@@ -156,7 +160,7 @@ function showTeams() {
                 for (var k = 0; k < Object.keys(data.response).length; k++) {
                     var team = document.createElement("div");
                     team.setAttribute('class', 'team');
-                    team.innerHTML = json[k].TeamName;
+                    team.innerHTML = json[k].TeamName + "<kbd id=\"nameTeam\" style=\"font-size: 12px; margin-left: 5%; background-color: wheat; color: #800080;font-family: Courier New; border-radius: 10px;\">".concat(json[k].Members, "</kbd>");
                     teamDiv.appendChild(team);
                 }
 
@@ -179,42 +183,49 @@ function createTeam_onclick() {
 
     var teamid = "team".concat(val);
 
-    fetch(urlCreateTeam, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            "id": id,
-            "name": val,
-        })
+    for (var i = 0; i < idList.length; i++) {
 
-    }).then(function (res) {
-        if (res.ok) {
-            res.json().then(function (data) {
+        fetch(urlCreateTeam, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                "id": idList[i],
+                "name": val,
+                "members": mList
+            })
 
-                var allTeams = document.getElementById("allTeams");
+        }).then(function (res) {
+            if (res.ok) {
+                res.json().then(function (data) {
+                    if (idList[i] == id) {
+                        var allTeams = document.getElementById("allTeams");
 
-                var team = document.createElement("div");
-                team.setAttribute('class', 'team');
-                team.setAttribute('id', teamid);
-                team.innerHTML = document.getElementById("newteam").value;
-                allTeams.appendChild(team);
+                        var team = document.createElement("div");
+                        team.setAttribute('class', 'team');
+                        team.setAttribute('id', teamid);
+                        team.innerHTML = document.getElementById("newteam").value;
+                        allTeams.appendChild(team);
 
-                team.setAttribute('onclick', showOptions(teamid));
+                        team.setAttribute('onclick', showOptions(teamid));
+                    }
 
-            }.bind(this));
-        }
-        else {
-            res.json().then(function (data) {
-                console.log(data.message);
-            }.bind(this));
-        }
-    }).catch(function (err) {
-        alert("Error: No internet connection!");
-        console.log(err.message + ": No Internet Connection");
-    });
+                }.bind(this));
+            }
+            else {
+                res.json().then(function (data) {
+                    console.log(data.message);
+                }.bind(this));
+            }
+        }).catch(function (err) {
+            alert("Error: No internet connection!");
+            console.log(err.message + ": No Internet Connection");
+        });
+
+    }
+    showTeams();
 }
 
 function showOptions(teamDivId) {
@@ -275,7 +286,7 @@ function runSearch() {
                             var s = (str[1].split(")"))[0];
                             addMember(s);
                         });
-                        
+
                     }
                 }
                 else if (length == 0) {
@@ -297,7 +308,7 @@ function runSearch() {
                     }
 
                 })
-                
+
             });
         }
         else {
@@ -338,43 +349,22 @@ function addMember(memberemail) {
                 var member = data.response[0];
                 var members = document.getElementById("members");
                 if (members.innerHTML) {
-                    if (members.innerHTML.includes(member.Name)){
+                    if (members.innerHTML.includes(member.Name)) {
                         return;
                     }
-                    members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+                    members.innerHTML = members.innerHTML + "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");
                 }
                 else {
-                    members.innerHTML = "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");        
+                    members.innerHTML = "<kbd id=\"name\" style=\"font-size: 18px; margin-left: 5%; font-family: Courier New; border-radius: 10px;\">".concat(member.Name, "</kbd>");
                 }
-                
+
                 var val = document.getElementById("newteam").value;
-            
-                fetch(urlCreateTeam, {
-                    method: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "id": member.idUsers,
-                        "name": val,
-                    })
-            
-                }).then(function (res) {
-                    if (res.ok) {
-                        res.json().then(function (data) {
-                        }.bind(this));
-                    }
-                    else {
-                        res.json().then(function (data) {
-                            console.log(data.message);
-                        }.bind(this));
-                    }
-                }).catch(function (err) {
-                    alert("Error: No internet connection!");
-                    console.log(err.message + ": No Internet Connection");
-                });
-            
+
+                if (!mList.includes(member.Name)) {
+                    mList = mList + ", " + (member.Name);
+                    idList.push(member.idUsers);
+                }
+
             }.bind(this));
         }
         else {
@@ -401,6 +391,8 @@ function clearModal() {
 function checkValue() {
 
     if (document.getElementById("newteam").value.length != 0) {
+        idList.push(id);
+        createTeam_onclick();
         return;
     }
     alert("Name of the team cannot be empty!");

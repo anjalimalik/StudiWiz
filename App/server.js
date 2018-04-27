@@ -114,11 +114,13 @@ app.post('/getTeams', function (req, res) {
 app.post('/newTeam', function (req, res) {
   var id = req.body.id;
   var name = req.body.name;
+  var members = req.body.members;
   let query = "INSERT INTO Teams SET ?";
 
   let team = {
     idUsers: id,
-    TeamName: name
+    TeamName: name,
+    Members: members
   }
 
   db.query(query, team, function (error, response) {
