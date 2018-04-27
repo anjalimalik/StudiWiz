@@ -250,6 +250,12 @@ function runSearch() {
                 if (length != 0) {
                     for (i = 0; i < length; i++) {
                         if (json[i].idUsers == id) {
+                            var lnk = document.createElement("a");
+                            lnk.setAttribute('id', 'searchHide');
+                            lnk.setAttribute('class', 'searchClass dropdown-item half-rule');
+                            lnk.innerHTML = "No matching users found!";
+                            lnk.style = "border-bottom: 1px solid #ccc; font-weight: bold; margin-left:0;";
+                            userSearchDiv.appendChild(lnk);
                             continue;
                         }
                         var lnk = document.createElement("a");
@@ -295,7 +301,8 @@ function runSearch() {
 }
 
 function addMember(member) {
-    $('#searchHide').remove();
+    $('.searchClass.dropdown-item').remove();
+    $('.searchClass.dropdown-item.half-rule').remove();
     document.getElementById("searchUser").value = "";
     
     var members = document.getElementById("members");
@@ -342,6 +349,8 @@ function addMember(member) {
 function clearModal() {
     document.getElementById("newteam").value = "";
     document.getElementById("searchUser").value = "";
+    $('.searchClass.dropdown-item').remove();
+    $('.searchClass.dropdown-item.half-rule').remove();
     $('#searchHide').remove();
     $('#name').remove();
 }
