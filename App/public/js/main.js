@@ -391,3 +391,13 @@ function clearModal() {
     $('#searchHide').remove();
     $('#name').remove();
 }
+
+function checkValue() {
+
+    if (document.getElementById("newteam").value.length != 0) {
+        return;
+    }
+    alert("Name of the team cannot be empty!");
+    location.reload();
+    $("#closemodal").click();
+}
