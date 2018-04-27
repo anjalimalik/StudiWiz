@@ -2,6 +2,7 @@
 
 var urlgetTeams = "http://localhost:3000/getTeams";
 var urlUserDetails = "http://localhost:3000/getUserDetails";
+var urlCreateTeam = "http://localhost:3000/newTeam";
 
 var mylist;
 var i;
@@ -162,5 +163,38 @@ function showTeams() {
 }
 
 function createTeam_onclick() {
-    
+
+    fetch(urlCreateTeam, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            "id": id,
+            "name": document.getElementById("newteam").value,
+        })
+
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function (data) {
+                
+                var allTeams = document.getElementById("allTeams");
+
+                var team = document.createElement("div");
+                team.setAttribute('class', 'team');
+                team.innerHTML = document.getElementById("newteam").value;
+                allTeams.appendChild(team);
+
+            }.bind(this));
+        }
+        else {
+            res.json().then(function (data) {
+                console.log(data.message);
+            }.bind(this));
+        }
+    }).catch(function (err) {
+        alert("Error: No internet connection!");
+        console.log(err.message + ": No Internet Connection");
+    });
 }
