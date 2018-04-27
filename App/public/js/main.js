@@ -419,6 +419,8 @@ function checkValue() {
 
 function showTasks() {
 
+    document.getElementById("items").innerHTML = "";
+
     fetch(urlgetTasks, {
         method: "POST",
         headers: {
